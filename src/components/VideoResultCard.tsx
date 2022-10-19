@@ -28,8 +28,11 @@ const VideoResultCard: Component = (props) => {
   });
 
   return (
-    <div ref={ref} class={`flex flex-initial order-${index}`}>
-      <div class="p-6 rounded-3xl shadow-inner bg-white-50 max-w-sm overflow-y-scroll max-h-96 backdrop-blur-xl">
+    <div
+      ref={ref}
+      class={`flex flex-initial border-dashed border-2 rounded-3xl overflow-y-auto   order-${index()}`}
+    >
+      <div class="p-6 rounded-3xl bg-white-50 max-w-sm  max-h-96">
         <h5
           class="text-gray-700 text-xl font-medium mb-2 mr-44"
           innerHTML={title}

@@ -36,7 +36,7 @@ const SearchResults: Component = (props) => {
   };
 
   return (
-    <div class="flex flex-initial justify-center flex-wrap gap-6 py-6 px-6 h-[80vh] max-h-[80vh] bg-gradient-r-to-l from-green-100 to-green-900">
+    <div class="flex flex-initial justify-center flex-wrap gap-6 py-6 px-6 h-[80vh] max-h-[80vh]">
       <For each={videoResults()}>
         {(result, i) => {
           return (

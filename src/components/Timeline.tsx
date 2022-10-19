@@ -16,13 +16,13 @@ const Timeline: Component = (props) => {
   );
 
   return (
-    <ol class="border-l border-gray-300">
+    <ol class="border-l border-gray-300 snap-y snap-mandatory ">
       <For each={items}>
         {(item, i) => {
           return (
-            <li>
+            <li class="snap-always snap-start">
               <div class="flex flex-start items-center pt-3">
-                <div class="bg-gray-300 w-2 h-2 rounded-full -ml-1 mr-3"></div>
+                <div class="bg-emerald-600 w-2 h-2 rounded-full -ml-1 mr-3"></div>
                 <a class="text-base text-green-600" href={item.url}>
                   {item.start}
                 </a>
