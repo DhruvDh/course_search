@@ -1,7 +1,11 @@
-import type { Component } from "solid-js";
+import type { Component, Setter } from "solid-js";
 import { mergeProps } from "solid-js";
 
-const MainSearch: Component = (props) => {
+interface MainSearchProps {
+  setSearchVal: Setter<string>;
+}
+
+const MainSearch: Component<MainSearchProps> = (props) => {
   const { setSearchVal } = mergeProps(
     {
       setSearchVal: (val) =>

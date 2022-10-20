@@ -1,7 +1,17 @@
 import { Component, For } from "solid-js";
 import { mergeProps } from "solid-js";
 
-const Timeline: Component = (props) => {
+export interface SubtitleItem {
+  start: string;
+  url: string;
+  text: string;
+}
+
+interface TimelineProps {
+  items: SubtitleItem[];
+}
+
+const Timeline: Component<TimelineProps> = (props) => {
   const { items } = mergeProps(
     {
       items: [

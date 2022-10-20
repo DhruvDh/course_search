@@ -1,11 +1,23 @@
 import { Presence, Motion } from "@motionone/solid";
 import { Component, createEffect, For, Show } from "solid-js";
 import { mergeProps } from "solid-js";
-
 import VideoResultCard from "./VideoResultCard";
 
-const SearchResults: Component = (props) => {
-  const { hits } = mergeProps({ hits: () => [] }, props);
+interface SearchHit {
+  start: string;
+  url: string;
+  _formatted: {
+    title: string;
+    text: string;
+  };
+}
+
+interface SearchResultsProps {
+  hits: () => SearchHit[];
+}
+
+const SearchResults: Component<SearchResultsProps> = (props) => {
+  const { hits } = mergeProps({ hits: () => new Array<SearchHit>() }, props);
   const videoResults = () => {
     const videoResults = [];
     const videoMap = {};

@@ -3,11 +3,22 @@ import { Component, onCleanup, onMount } from "solid-js";
 import { mergeProps } from "solid-js";
 import { spring } from "motion";
 import Timeline from "./Timeline";
+import { SubtitleItem } from "./Timeline";
 
-const VideoResultCard: Component = (props) => {
+interface VideoResultCardProps {
+  index: () => number;
+  title: string;
+  results: SubtitleItem[];
+}
+
+const VideoResultCard: Component<VideoResultCardProps> = (props) => {
   let ref!: HTMLDivElement;
   const { index, title, results } = mergeProps(
-    { index: 0, title: "Missing title", results: [] },
+    {
+      index: () => 0,
+      title: "Missing title",
+      results: new Array<SubtitleItem>(),
+    },
     props
   );
 
