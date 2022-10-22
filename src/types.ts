@@ -26,3 +26,10 @@ export interface MeiliSearchResults {
   'processingTimeMs': number
   'query': string
 }
+
+export interface MeiliSearchError {
+  message: string;
+  code: number;
+  type: "invalid_request" | "internal" | "auth";
+  link: string;
+}

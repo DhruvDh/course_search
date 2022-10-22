@@ -30,10 +30,12 @@ const SearchResults: Component<SearchResultsProps> = (props) => {
 
     for (const [key, values] of videoMap.entries()) {
       values.sort((lhs, rhs) => {
-        const l = Date.parse(`2022-10-22 ${lhs.start}`);
-        const r = Date.parse(`2022-10-22 ${lhs.start}`);
+        const l = lhs.start.split(":").map((x) => parseInt(x));
+        const r = rhs.start.split(":").map((x) => parseInt(x));
 
-        return r - l;
+        return (
+          l[0] * 3600 + l[1] * 60 + l[2] - (r[0] * 3600 + r[1] * 60 + r[2])
+        );
       });
 
       videoResults.push({
