@@ -33,7 +33,7 @@ const SearchResults: Component<SearchResultsProps> = (props) => {
         const l = Date.parse(`2022-10-22 ${lhs.start}`);
         const r = Date.parse(`2022-10-22 ${lhs.start}`);
 
-        return l - r;
+        return r - l;
       });
 
       videoResults.push({
