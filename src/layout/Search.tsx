@@ -1,15 +1,12 @@
 import { useParams } from "@solidjs/router";
-import {
-  Component,
-  createEffect,
-  createResource,
-  createSignal,
-  Show,
-} from "solid-js";
+import { Component, createResource, createSignal, Show } from "solid-js";
 import MainSearch from "../components/MainSearch";
 import SearchResults from "../components/SearchResults";
+import { MeiliSearchResults, SearchHit } from "../types";
 
-const fetchResults = async (searchVal) => {
+const fetchResults = async (
+  searchVal: string
+): Promise<MeiliSearchResults | undefined> => {
   const params = useParams();
   const index = params.index;
   if (searchVal === undefined) {
@@ -17,7 +14,7 @@ const fetchResults = async (searchVal) => {
   } else if (searchVal.length === 0) {
     return undefined;
   } else {
-    return (
+    return (await (
       await fetch(`https://apisearch.dhruvdh.com/indexes/${index}/search`, {
         method: "post",
         headers: {
@@ -28,18 +25,18 @@ const fetchResults = async (searchVal) => {
         body: JSON.stringify({
           q: searchVal,
           attributesToHighlight: ["title", "text"],
-          highlightPreTag: `<em class="text-green-700">`,
+          highlightPreTag: '<em class="text-green-700">',
           highlightPostTag: "</em>",
         }),
       })
-    ).json();
+    ).json()) as MeiliSearchResults;
   }
 };
 
 const Search: Component = () => {
-  const [mainSearchVal, setMainSearchVal] = createSignal();
+  const [mainSearchVal, setMainSearchVal] = createSignal("");
   const [searchResults] = createResource(mainSearchVal, fetchResults);
-  const hits = () => {
+  const hits = (): SearchHit[] => {
     if (
       searchResults() !== undefined &&
       searchResults().hasOwnProperty("hits")
@@ -75,7 +72,10 @@ const Search: Component = () => {
     <>
       <MainSearch setSearchVal={setMainSearchVal} />
       <Show when={errorMessage() !== undefined}>{ErrorMessage}</Show>
-      <Show when={hits().length > 0 && errorMessage() === undefined}>
+      <Show
+        when={hits().length > 0 && errorMessage() === undefined}
+        fallback={NoResults}
+      >
         <SearchResults hits={hits} />
       </Show>
     </>

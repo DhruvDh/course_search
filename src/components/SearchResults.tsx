@@ -1,16 +1,6 @@
-import { Presence, Motion } from "@motionone/solid";
-import { Component, createEffect, For, Show } from "solid-js";
-import { mergeProps } from "solid-js";
+import { Component, For, mergeProps } from "solid-js";
 import VideoResultCard from "./VideoResultCard";
-
-interface SearchHit {
-  start: string;
-  url: string;
-  _formatted: {
-    title: string;
-    text: string;
-  };
-}
+import { SubtitleItem, SearchHit, VideoResults } from "../types";
 
 interface SearchResultsProps {
   hits: () => SearchHit[];
@@ -18,26 +8,34 @@ interface SearchResultsProps {
 
 const SearchResults: Component<SearchResultsProps> = (props) => {
   const { hits } = mergeProps({ hits: () => new Array<SearchHit>() }, props);
-  const videoResults = () => {
-    const videoResults = [];
-    const videoMap = {};
+  const videoResults: () => VideoResults[] = () => {
+    const videoResults = new Array<VideoResults>();
+    const videoMap = new Map<string, SubtitleItem[]>();
 
     for (const hit of hits()) {
-      const res = {
+      const res: SubtitleItem = {
         start: hit.start,
         text: hit._formatted.text,
         url: hit.url,
       };
 
       const title = hit._formatted.title;
-      if (videoMap.hasOwnProperty(title)) {
-        videoMap[title].push(res);
+      const val = videoMap.get(title);
+      if (val != null) {
+        val.push(res);
       } else {
-        videoMap[title] = [res];
+        videoMap.set(title, [res]);
       }
     }
 
-    for (const [key, values] of Object.entries(videoMap)) {
+    for (const [key, values] of videoMap.entries()) {
+      values.sort((lhs, rhs) => {
+        const l = Date.parse(`2022-10-22 ${lhs.start}`);
+        const r = Date.parse(`2022-10-22 ${lhs.start}`);
+
+        return l - r;
+      });
+
       videoResults.push({
         title: key,
         results: values,

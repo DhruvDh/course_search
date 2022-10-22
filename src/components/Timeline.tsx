@@ -1,14 +1,8 @@
-import { Component, For } from "solid-js";
-import { mergeProps } from "solid-js";
-
-export interface SubtitleItem {
-  start: string;
-  url: string;
-  text: string;
-}
+import { Component, For, mergeProps } from 'solid-js'
+import { SubtitleItem } from '../types'
 
 interface TimelineProps {
-  items: SubtitleItem[];
+  items: SubtitleItem[]
 }
 
 const Timeline: Component<TimelineProps> = (props) => {
@@ -16,14 +10,14 @@ const Timeline: Component<TimelineProps> = (props) => {
     {
       items: [
         {
-          start: "00:00:00,000",
-          url: "https://youtu.be/1aGKHCzpAwE?t=780",
-          text: "sample subtitle text",
-        },
-      ],
+          start: '00:00:00,000',
+          url: 'https://youtu.be/1aGKHCzpAwE?t=780',
+          text: 'sample subtitle text'
+        }
+      ]
     },
     props
-  );
+  )
 
   return (
     <ol class="border-l border-gray-300 snap-y snap-mandatory ">
@@ -41,11 +35,11 @@ const Timeline: Component<TimelineProps> = (props) => {
                 <p class="text-gray-500 mb-3" innerHTML={item.text}></p>
               </div>
             </li>
-          );
+          )
         }}
       </For>
     </ol>
-  );
-};
+  )
+}
 
-export default Timeline;
+export default Timeline
