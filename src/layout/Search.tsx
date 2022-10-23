@@ -1,5 +1,13 @@
 import { useParams } from "@solidjs/router";
-import { Component, createResource, createSignal, Show } from "solid-js";
+import {
+  Component,
+  createResource,
+  createSignal,
+  Match,
+  Show,
+  Switch,
+} from "solid-js";
+import CenteredH1 from "../components/CenteredH1";
 import MainSearch from "../components/MainSearch";
 import SearchResults from "../components/SearchResults";
 import { MeiliSearchError, MeiliSearchResults, SearchHit } from "../types";
@@ -9,6 +17,17 @@ const fetchResults = async (
 ): Promise<MeiliSearchResults | MeiliSearchError> => {
   const params = useParams();
   const index = params.index;
+  if (searchVal.length === 0) {
+    return {
+      hits: [],
+      offset: 0,
+      limit: 0,
+      processingTimeMs: 0,
+      query: "",
+      estimatedTotalHits: 0,
+    };
+  }
+
   return (await (
     await fetch(`https://apisearch.dhruvdh.com/indexes/${index}/search`, {
       method: "post",
@@ -49,27 +68,20 @@ const Search: Component = () => {
     }
   };
 
-  const ErrorMessage = (
-    <div class="font-light font-sans text-6xl text-center px-6 py-6">
-      {errorMessage()}
-    </div>
-  );
-
-  const NoResults = (
-    <div class="font-light font-sans text-6xl text-center px-6 py-6">
-      "No results found."
-    </div>
-  );
   return (
     <>
       <MainSearch setSearchVal={setMainSearchVal} />
-      <Show when={errorMessage() !== undefined}>{ErrorMessage}</Show>
-      <Show
-        when={hits().length > 0 && errorMessage() === undefined}
-        fallback={NoResults}
-      >
-        <SearchResults hits={hits} />
-      </Show>
+      <Switch>
+        <Match when={errorMessage() !== undefined}>
+          <CenteredH1 text={errorMessage()} />
+        </Match>
+        <Match when={hits().length === 0}>
+          <CenteredH1 text="No results found." />
+        </Match>
+        <Match when={hits().length > 0}>
+          <SearchResults hits={hits} />
+        </Match>
+      </Switch>
     </>
   );
 };

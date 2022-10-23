@@ -1,41 +1,41 @@
-import { createMotion } from '@motionone/solid'
-import { Component, onMount, mergeProps } from 'solid-js'
-import { spring } from 'motion'
-import Timeline from './Timeline'
-import { SubtitleItem } from '../types'
+import { createMotion } from "@motionone/solid";
+import { Component, onMount, mergeProps } from "solid-js";
+import { spring } from "motion";
+import Timeline from "./Timeline";
+import { SubtitleItem } from "../types";
 
 interface VideoResultCardProps {
-  index: () => number
-  title: string
-  results: SubtitleItem[]
+  index: () => number;
+  title: string;
+  results: SubtitleItem[];
 }
 
 const VideoResultCard: Component<VideoResultCardProps> = (props) => {
-  let ref!: HTMLDivElement
+  let ref!: HTMLDivElement;
   const { index, title, results } = mergeProps(
     {
       index: () => 0,
-      title: 'Missing title',
-      results: new Array<SubtitleItem>()
+      title: "Missing title",
+      results: new Array<SubtitleItem>(),
     },
     props
-  )
+  );
 
   onMount(() => {
     createMotion(ref, {
-      initial: { opacity: 0, x: -60 },
+      initial: { opacity: 0, y: 60 },
       animate: {
         opacity: 1,
-        x: 0,
-        transition: { duration: 0.15, easing: spring() }
+        y: 0,
+        transition: { duration: 0.15, easing: spring() },
       },
       exit: {
         opacity: 0,
-        x: 60,
-        transition: { duration: 0.15, easing: spring() }
-      }
-    })
-  })
+        y: 60,
+        transition: { duration: 0.15, easing: spring() },
+      },
+    });
+  });
 
   return (
     <div
@@ -50,7 +50,7 @@ const VideoResultCard: Component<VideoResultCardProps> = (props) => {
         <Timeline items={results} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default VideoResultCard
+export default VideoResultCard;
