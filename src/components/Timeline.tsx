@@ -1,8 +1,8 @@
-import { Component, For, mergeProps } from "solid-js";
-import { SubtitleItem } from "../types";
+import { Component, For, mergeProps } from 'solid-js'
+import { SubtitleItem } from '../types'
 
 interface TimelineProps {
-  items: SubtitleItem[];
+  items: SubtitleItem[]
 }
 
 const Timeline: Component<TimelineProps> = (props) => {
@@ -10,14 +10,14 @@ const Timeline: Component<TimelineProps> = (props) => {
     {
       items: [
         {
-          start: "00:00:00,000",
-          url: "https://youtu.be/1aGKHCzpAwE?t=780",
-          text: "sample subtitle text",
-        },
-      ],
+          start: '00:00:00,000',
+          url: 'https://youtu.be/1aGKHCzpAwE?t=780',
+          text: 'sample subtitle text'
+        }
+      ]
     },
     props
-  );
+  )
 
   return (
     <ol class="border-l border-gray-300 ">
@@ -37,11 +37,11 @@ const Timeline: Component<TimelineProps> = (props) => {
                 </a>
               </div>
             </li>
-          );
+          )
         }}
       </For>
     </ol>
-  );
-};
+  )
+}
 
-export default Timeline;
+export default Timeline

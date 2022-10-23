@@ -1,18 +1,18 @@
-import { Component, JSXElement, mergeProps } from "solid-js";
+import { Component, JSXElement, mergeProps } from 'solid-js'
 
 interface H1Props {
-  text?: string;
-  children?: JSXElement;
+  text?: string
+  children?: JSXElement
 }
 
 const H1: Component<H1Props> = (props) => {
   const { text, children } = mergeProps(
     {
-      text: "",
-      children: undefined,
+      text: '',
+      children: undefined
     },
     props
-  );
+  )
 
   return (
     <>
@@ -25,7 +25,7 @@ const H1: Component<H1Props> = (props) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default H1;
+export default H1

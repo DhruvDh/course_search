@@ -28,8 +28,8 @@ export interface MeiliSearchResults {
 }
 
 export interface MeiliSearchError {
-  message: string;
-  code: number;
-  type: "invalid_request" | "internal" | "auth";
-  link: string;
+  message: string
+  code: number
+  type: 'invalid_request' | 'internal' | 'auth'
+  link: string
 }

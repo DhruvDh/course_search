@@ -1,23 +1,22 @@
-import { Component, onMount, Setter } from "solid-js";
-import { mergeProps } from "solid-js";
+import { Component, onMount, Setter, mergeProps } from 'solid-js'
 
 interface MainSearchProps {
-  setSearchVal: Setter<string>;
+  setSearchVal: Setter<string>
 }
 
 const MainSearch: Component<MainSearchProps> = (props) => {
-  let ref!: HTMLInputElement;
+  let ref!: HTMLInputElement
   const { setSearchVal } = mergeProps(
     {
       setSearchVal: (val: string) =>
-        console.error("You need to pass a setSearch function to MainSearch!"),
+        console.error('You need to pass a setSearch function to MainSearch!')
     },
     props
-  );
+  )
 
   onMount(() => {
-    ref.focus();
-  });
+    ref.focus()
+  })
 
   return (
     <div class="py-6 px-6 ">
@@ -30,7 +29,7 @@ const MainSearch: Component<MainSearchProps> = (props) => {
         onInput={(e) => setSearchVal(e.currentTarget.value)}
       ></input>
     </div>
-  );
-};
+  )
+}
 
-export default MainSearch;
+export default MainSearch
