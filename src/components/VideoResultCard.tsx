@@ -20,7 +20,8 @@ const VideoResultCard: Component<VideoResultCardProps> = (props) => {
 
   return (
     <div
-      class={`flex flex-initial border-dashed border-2 rounded-3xl overflow-y-auto   order-${index()}`}
+      id={`video-result-card-${index()}`}
+      class={'border-dashed border-2 rounded-3xl overflow-y-auto'}
     >
       <div class="p-6 rounded-3xl bg-white-50 max-w-sm  max-h-96">
         <h5
@@ -29,7 +30,7 @@ const VideoResultCard: Component<VideoResultCardProps> = (props) => {
         ></h5>
         <Timeline items={results} />
       </div>
-    </div>
+    </div >
   )
 }
 

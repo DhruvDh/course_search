@@ -1,8 +1,7 @@
-import { Component, For, mergeProps } from 'solid-js'
+import { Component, createEffect, For, mergeProps } from 'solid-js'
 import VideoResultCard from './VideoResultCard'
 import { SubtitleItem, SearchHit, VideoResults } from '../types'
-import { TransitionGroup } from 'solid-transition-group'
-import { timeline } from 'motion'
+import { animate, stagger } from 'motion'
 
 interface SearchResultsProps {
   hits: () => SearchHit[]
@@ -46,33 +45,32 @@ const SearchResults: Component<SearchResultsProps> = (props) => {
       })
     }
 
+    videoResults.sort((lhs, rhs) => {
+      return rhs.results.length - lhs.results.length
+    })
+
     return videoResults
   }
 
+  createEffect(() => {
+    if (videoResults().length !== 0) {
+      animate(document.querySelectorAll("[id^='video-result-card-']"), { opacity: [0, 1] }, { delay: stagger(0.15) })
+    }
+  })
+
   return (
-    <div class="flex flex-initial justify-center flex-wrap gap-6 py-6 px-6 h-[78vh] max-h-[78vh]">
-      <TransitionGroup
-        onExit={(el, done) => {
-          timeline([
-            [el, { opacity: 1 }],
-            [el, { opacity: 0.6 }]
-          ], { duration: 0.33 }).finished.then(done).catch(
-            (err) => console.error(err)
+    <div class="flex flex-row flex-wrap justify-center  gap-6 py-6 px-6 h-[78vh] max-h-[78vh]">
+      <For each={videoResults()}>
+        {(result, i) => {
+          return (
+            <VideoResultCard
+              index={i}
+              title={result.title}
+              results={result.results}
+            />
           )
         }}
-      >
-        <For each={videoResults()}>
-          {(result, i) => {
-            return (
-              <VideoResultCard
-                index={i}
-                title={result.title}
-                results={result.results}
-              />
-            )
-          }}
-        </For>
-      </TransitionGroup>
+      </For>
     </div >
   )
 }

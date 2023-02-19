@@ -1,7 +1,6 @@
 import { useParams } from '@solidjs/router'
 import {
   Component,
-  createEffect,
   createResource,
   createSignal,
   Match,
@@ -47,8 +46,6 @@ const fetchResults = async (
 }
 
 const Search: Component = () => {
-  let mainDiv!: HTMLDivElement
-
   const [mainSearchVal, setMainSearchVal] = createSignal('')
   const [searchResults] = createResource(mainSearchVal, fetchResults)
   const hits = (): SearchHit[] => {
@@ -70,18 +67,12 @@ const Search: Component = () => {
     }
   }
 
-  createEffect(() => {
-    if (hits().length > 0) {
-      mainDiv.style.flexBasis = 'auto'
-    } else {
-      mainDiv.style.flexBasis = '15vh'
-    }
-  })
-
   return (
-    <>
-      <MainSearch setSearchVal={setMainSearchVal} />
-      <div ref={mainDiv} class="transition-all">
+    <div id="SearchLayoutContainer" class="flex flex-col flex-auto flex-wrap">
+      <div id="topSpacer" class="flex-initial order-1 h-1/3" />
+      <div id='mainSearch' class='flex-1 basis-full order-2'>
+        <MainSearch setSearchVal={setMainSearchVal} searchVal={mainSearchVal} />
+
         <Switch>
           <Match when={errorMessage() !== undefined}>
             <CenteredH1 text={errorMessage()} />
@@ -94,7 +85,8 @@ const Search: Component = () => {
           </Match>
         </Switch>
       </div>
-    </>
+      <div id="bottomSpacer" class="flex-initial order-3 h-1/3" />
+    </div>
   )
 }
 
