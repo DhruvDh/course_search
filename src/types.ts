@@ -16,6 +16,7 @@ export interface SearchHit {
 export interface VideoResults {
   title: string
   results: SubtitleItem[]
+  staggerStart: number
 }
 
 export interface MeiliSearchResults {

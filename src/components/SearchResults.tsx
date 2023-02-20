@@ -41,7 +41,8 @@ const SearchResults: Component<SearchResultsProps> = (props) => {
 
       videoResults.push({
         title: key,
-        results: values
+        results: values,
+        staggerStart: 0
       })
     }
 
@@ -49,7 +50,9 @@ const SearchResults: Component<SearchResultsProps> = (props) => {
       return rhs.results.length - lhs.results.length
     })
 
-    return videoResults
+    return videoResults.map((x, i) => {
+      return { ...x, staggerStart: i * 0.15 }
+    })
   }
 
   createEffect(() => {
@@ -67,6 +70,7 @@ const SearchResults: Component<SearchResultsProps> = (props) => {
               index={i}
               title={result.title}
               results={result.results}
+              staggerStart={result.staggerStart}
             />
           )
         }}
